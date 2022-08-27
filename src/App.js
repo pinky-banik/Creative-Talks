@@ -1,13 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Topbar from './Components/Topbar';
+import Home from './Pages/Home';
+import Single from './Components/Single';
+import Write from './Components/Write';
+import Settings from './Components/Settings';
 
 
 function App() {
   return (
-    <div className="App">
-      <h1 className='text-primary text-8xl'>hello</h1>
+    <div >
+      <Topbar/>
+      <Settings/>
       <ToastContainer />
     </div>
   );
