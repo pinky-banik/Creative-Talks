@@ -9,7 +9,7 @@ const Header = () => {
                 <span className='text-2xl absolute top-24'>React & Node</span>
                 <span className='text-8xl absolute top-32'>Blog</span>
             </div>
-            <img className='w-full h-[32rem] object-cover object-center mt-28' src={cover} alt="" />
+            <img className='w-full h-[32rem] object-cover object-center mt-32' src={cover} alt="" />
         </div>
     );
 };

@@ -1,35 +1,91 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
 import {AiOutlineDelete} from 'react-icons/ai';
 import {BiEdit} from 'react-icons/bi';
+import { Link, useParams } from 'react-router-dom';
+import { Context } from '../context/Context';
 
 const SinglePost = () => {
+    const postId = useParams();
+    const[post,setPost] = useState({});
+    const {createdAt,photo,catagories,_id,username}= post;
+    const publicFolder = "http://localhost:4000/images/";
+    const {user} = useContext(Context);
+    const [title,setTitle] = useState('');
+    const [desc,setDesc] = useState('');
+    const [updateMode,setUpdateMode] = useState(false);
+
+    useEffect(()=>{ 
+        const getPost = async()=>{
+            const res =await axios.get(`http://localhost:4000/api/posts/${postId}`)
+        }
+        getPost();
+    },[postId]);
+
+    const handleDelete =async() =>{
+        try{
+        await axios.delete(`/posts/${post._id}` ,{data:{username:user.username}});
+        window.location.replace("/");
+        }catch(err){}
+    }
+    const handleUpdate =async() =>{
+        try{
+        await axios.put(`/posts/${post._id}` ,
+        {username:user.username,
+            title,
+            desc
+        });
+        window.location.reload();
+        setUpdateMode(false);
+        }catch(err){}
+    }
     return (
         <div className='w-full p-5'>
             <div>
-            <img className='w-full  object-cover rounded-md ' src="https://miro.medium.com/max/1050/1*i3hzpSEiEEMTuWIYviYweQ.png" alt="" />
+            {
+                photo && 
+                (<img className='w-full  object-cover rounded-md ' src={publicFolder + photo} alt="" />)
+            }
+            
             <div className='flex flex-col justify-center items-center '>
                 <div className=' text-[#be9656] flex gap-2 mt-3 cursor-pointer' style={{fontFamily : 'Varela Round'}} >
-                    <span>React</span>
-                    <span>Node</span>
+                    {
+                        catagories.map(c=>
+                            <span key={c.name}>{c.name}</span>)
+                    }
                 </div>
-                
-                <div className='flex w-full '> 
-                <span className='text-2xl flex justify-center items-center mt-2 font-bold w-full text-center cursor-pointer' style={{fontFamily : 'Lora'}}>Lorem ipsum dolor sit amet.</span>
-                <div className=' flex justify-end items-center w-fit gap-2 float-right'>
-                    <BiEdit className=' text-green-500 text-2xl'/>
-                    <AiOutlineDelete className=' text-red-500 text-2xl'/>
+                {
+                updateMode ?  
+                <input type="text" value={title} className='text-2xl flex justify-center items-center mt-2 font-bold w-full text-center cursor-pointer' autoFocus onChange={(e)=>setTitle(e.target.value)}/>
+                :(
+                    <div className='flex w-full '> 
+                <span className='text-2xl flex justify-center items-center mt-2 font-bold w-full text-center cursor-pointer' style={{fontFamily : 'Lora'}}>{title}</span>
+                {username === user?.username && 
+                (<div className=' flex justify-end items-center w-fit gap-2 float-right'>
+                <BiEdit className=' text-green-500 text-2xl' onClick={()=>setUpdateMode(true)}/>
+                <AiOutlineDelete className=' text-red-500 text-2xl'onClick={handleDelete}/>
 
+               </div>)}
                 </div>
-                </div>
+                )}
+                
                 <hr />
                 <div className='flex justify-between w-full'>
-                <span className="italic text-xl text-[#999] my-2"  >Author : Pinky Banik</span>
-                <span className="italic text-[#999] my-2"  >1 hour ago</span>
+                <span className="italic text-xl text-[#999] my-2"  >Author : <Link to={`/?user=${username}`}><b>{username}</b></Link></span>
+                <span className="italic text-[#999] my-2"  >{new Date(createdAt).toDateString()}</span>
                 </div>
             </div>
-            <p style={{fontFamily : 'Lora'}} className='text-[#444] overflow-hidden first-letter:text-4xl text-md first-letter:ml-5 '>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis reiciendis magnam eveniet neque libero accusantium quidem impedit earum architecto quo voluptates dolore exercitationem accusamus cum, animi similique doloribus asperiores, recusandae a obcaecati ipsum illum ea consequuntur eos. Magni totam porro voluptatem, adipisci consequatur maiores suscipit dicta dolores! Tenetur, iure veritatis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quae quia velit suscipit nisi distinctio voluptas nam hic aliquam itaque? Porro nesciunt, ea earum consectetur facere, exercitationem molestiae nobis hic quos quia quidem doloremque iusto fugit magnam voluptatum, sequi aperiam. Tempora dolor expedita necessitatibus totam, asperiores voluptates et. Blanditiis at vel laudantium dicta deserunt quae, labore facilis! Dolores inventore harum mollitia qui ad dolor possimus ex reprehenderit libero ea voluptatem nobis aliquam, iure dicta porro, maiores atque! Quis quibusdam laudantium quae dicta, provident placeat deleniti, perspiciatis autem rem error recusandae voluptate. Odit provident quis sit quisquam blanditiis? Numquam, cupiditate? Repellat ducimus, dolore, neque, commodi est repellendus at nihil vel explicabo non voluptatem sit molestias quaerat magni doloremque praesentium nobis maiores debitis corporis. Modi natus sit autem cumque eum esse voluptate. Blanditiis harum fugiat hic ex, magni vel possimus quas quisquam laudantium sit, quidem nisi, tempora saepe mollitia ipsam debitis. Esse.
-            </p>
+            {
+                updateMode ? <textarea  style={{fontFamily : 'Lora'}} className='text-[#444] overflow-hidden first-letter:text-4xl text-md first-letter:ml-5 ' value={desc} onChange={(e)=>setDesc(e.target.value)}/> :
+                <p style={{fontFamily : 'Lora'}} className='text-[#444] overflow-hidden first-letter:text-4xl text-md first-letter:ml-5 '>
+                {desc}
+                </p>
+            }
+            {
+                updateMode && 
+                <button className='bg-teal-600 p-2 rounded w-20 text-white cursor-pointer self-end' onClick={handleUpdate}>Update</button>
+            }
+            
             </div>
         </div>
     );

@@ -1,7 +1,18 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { FaFacebookSquare, FaInstagramSquare, FaTwitterSquare } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
+    const [cats, setCats] = useState([]);
+
+    useEffect(() => {
+        const getCats = async () => {
+        const res = await axios.get("http://localhost:4000/api/categories");
+        setCats(res.data);
+        };
+        getCats();
+    }, []);
     return (
         <div className='sm:block hidden w-1/4 m-5 pb-5 bg-[#fdfbfb] rounded-md  flex-col items-center h-fit'>
             <div className="sidebarItem flex flex-col items-center">
@@ -12,12 +23,11 @@ const Sidebar = () => {
             <div className="sidebarItem flex flex-col items-center w-full">
                 <span style={{fontFamily: 'Varela Round'}} className='sidebarTitle uppercase m-5 p-1 w-4/5 text-lg text-[#222] border-y font-bold leading-5 text-center border-y-[#a7a4a4]'>Catagories</span>
                 <ul className='grid grid-cols-2 items-center justify-between '>
-                    <li className="inline-block ">React</li>
-                    <li className="inline-block ">Node</li>
-                    <li className="inline-block ">Html</li>
-                    <li className="inline-block ">Css</li>
-                    <li className="inline-block ">Css</li>
-                    <li className="inline-block ">Javascript</li>
+                {cats?.map((c) => (
+                    <Link to={`/?cat=${c.name}`} className="link">
+                    <li className="sidebarListItem">{c.name}</li>
+                    </Link>
+                ))}
                 </ul>
             </div>     
             <div className="sidebarItem flex flex-col items-center w-full">
