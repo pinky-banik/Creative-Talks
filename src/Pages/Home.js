@@ -10,12 +10,12 @@ import loading from '../assets/loading.gif';
 
 const Home = () => {
     const [posts,setPosts] = useState([]);
-    const [loading,setLoading] = useState(false);
+    const [loading,setLoading] = useState(true);
     const {search} = useLocation();
 
     useEffect(()=>{
         const fetchPosts = async() => {
-            setLoading(true);
+            // setLoading(true);
           const res = await axios.get("https://glacial-everglades-76553.herokuapp.com/api/posts"+search);
         //   console.log(res);
           setPosts(res.data);
