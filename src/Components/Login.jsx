@@ -3,7 +3,8 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import bg from '../assets/bg.jpg';
 import { Context } from './../context/Context';
-import {axios} from 'axios';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -15,13 +16,15 @@ const Login = () => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("http://localhost:4000/api/auth/login", {
+      const res = await axios.post("https://glacial-everglades-76553.herokuapp.com/api/auth/login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
       });
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
     } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE" });
+     { dispatch({ type: "LOGIN_FAILURE" });
+      // console.log(err);
+      toast.error("login unsucessful")}
     }
   };
     return (

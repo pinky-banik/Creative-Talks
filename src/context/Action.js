@@ -27,3 +27,14 @@ export const LoginStart = (userCredentials) => ({
   export const UpdateFailure = () => ({
     type: "UPDATE_FAILURE",
   });
+  export const DeleteStart = (userCredentials) => ({
+    type: "DELETE_START",
+  });
+  
+  export const DeleteSuccess = (user) => ({
+    type: "DELETE_SUCCESS",
+  });
+  
+  export const DELETEFailure = () => ({
+    type: "UPDATE_FAILURE",
+  });

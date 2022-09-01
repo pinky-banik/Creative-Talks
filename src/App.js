@@ -10,11 +10,9 @@ import Login from './Components/Login';
 import { useContext } from 'react';
 import Register from './Components/Register';
 import { Context } from './context/Context';
-
-
 function App() {
-  // const {user}=useContext(Context);
-  const user = true;
+  const {user}=useContext(Context);
+
   return (
     <div >
       <Topbar/>

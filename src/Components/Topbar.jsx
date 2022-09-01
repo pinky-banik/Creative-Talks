@@ -7,7 +7,7 @@ import { Context } from '../context/Context';
 
 const Topbar = () => {
     const {user,dispatch} = useContext(Context);
-    const publicFolder = "http://localhost:4000/images/";
+    // const publicFolder = "https://glacial-everglades-76553.herokuapp.com/images/";
     const handleLogout=()=>{
         dispatch({type : "LOGOUT"});
     }
@@ -24,14 +24,14 @@ const Topbar = () => {
             <Link to="/about"><li className="topList">About</li></Link>
             <Link to="/contact"><li className="topList">Contact</li></Link>
             <Link to="/write"><li className="topList">Write</li></Link>
-            <Link to="/"><li className="topList" onClick={handleLogout}>{user && "LOGOUT"}</li></Link>
+            <Link to="/"><li className="topList" onClick={handleLogout}>{user && "Logout"}</li></Link>
             </ul>
             
            </div>
            <div className="topRight flex justify-center items-center">
             {
                 user ?
-                <Link className='focus:outline-none' to="/settings"><img className='w-10 h-10 rounded-full object-cover object-center cursor-pointer focus:outline-none' src={publicFolder + user?.propfilePic || pic} alt="" /></Link> :
+                <Link className='focus:outline-none' to="/settings"><img className='w-10 h-10 rounded-full object-cover object-center cursor-pointer focus:outline-none' src={user.profilePic?(user?.profilePic) : pic} alt="" /></Link> :
                 (
                     <>
                     <ul className='flex gap-5'>

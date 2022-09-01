@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import bg from '../assets/bg.jpg';
 
 const Register = () => {
@@ -13,14 +14,19 @@ const Register = () => {
         e.preventDefault();
         setError(false);
         try {
-          const res = await axios.post("http://localhost:4000/api/auth/register", {
+          const res = await axios.post("https://glacial-everglades-76553.herokuapp.com/api/auth/register", {
             username,
             email,
             password,
           });
+          // console.log(res);
+          toast.success("registration successfull");
           res.data && window.location.replace("/login");
+          toast.success("registration successfull");
         } catch (err) {
           setError(true);
+          toast.error("registration not successfull");
+
         }
       };
     return (

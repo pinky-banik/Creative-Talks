@@ -8,7 +8,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         const getCats = async () => {
-        const res = await axios.get("http://localhost:4000/api/categories");
+        const res = await axios.get("https://glacial-everglades-76553.herokuapp.com/api/categories");
         setCats(res.data);
         };
         getCats();
@@ -24,7 +24,7 @@ const Sidebar = () => {
                 <span style={{fontFamily: 'Varela Round'}} className='sidebarTitle uppercase m-5 p-1 w-4/5 text-lg text-[#222] border-y font-bold leading-5 text-center border-y-[#a7a4a4]'>Catagories</span>
                 <ul className='grid grid-cols-2 items-center justify-between '>
                 {cats?.map((c) => (
-                    <Link to={`/?cat=${c.name}`} className="link">
+                    <Link key={c._id} to={`/?cat=${c.name}` } className="link">
                     <li className="sidebarListItem">{c.name}</li>
                     </Link>
                 ))}
