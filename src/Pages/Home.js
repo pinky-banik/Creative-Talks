@@ -13,15 +13,25 @@ const Home = () => {
     const [loading,setLoading] = useState(true);
     const {search} = useLocation();
 
+    // useEffect(()=>{
+    //     const fetchPosts = async() => {
+    //         // setLoading(true);
+    //       const res = await axios.get("https://glacial-everglades-76553.herokuapp.com/api/posts"+search);
+    //     //   console.log(res);
+    //       setPosts(res.data);
+    //       setLoading(false);
+    //     }
+    //     fetchPosts();
+    // },[search]);
+
+
     useEffect(()=>{
-        const fetchPosts = async() => {
-            // setLoading(true);
-          const res = await axios.get("https://glacial-everglades-76553.herokuapp.com/api/posts"+search);
-        //   console.log(res);
-          setPosts(res.data);
-          setLoading(false);
-        }
-        fetchPosts();
+        fetch("https://glacial-everglades-76553.herokuapp.com/api/posts"+search)
+        .then(res=>res.json())
+        .then(data=>{
+            setPosts(data)
+            setLoading(false)
+        })
     },[search]);
     if(loading)
     {

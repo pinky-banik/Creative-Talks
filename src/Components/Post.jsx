@@ -21,7 +21,7 @@ const Post = ({post}) => {
                             <span key={index}>{c}</span>)
                     }
                 </div>
-                <Link to={`/post/${_id}`}><span className='text-2xl mt-2 font-bold cursor-pointer hover:text-blue-800' style={{fontFamily : 'Josefin Sans'}}>{title.length>20?( title.slice(0,20)+"..."):title}</span></Link>
+                <Link to={`/post/${_id}`}><span className='text-2xl mt-2 font-bold underline cursor-pointer hover:text-blue-800 line-clamp-2' style={{fontFamily : 'Josefin Sans'}}>{title}</span></Link>
                 
                 <hr />
                 <span className="italic text-[#999] my-2" style={{fontFamily : 'Lora'}} >{new Date(createdAt).toDateString()}</span>
