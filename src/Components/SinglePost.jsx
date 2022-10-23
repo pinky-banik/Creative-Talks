@@ -69,8 +69,8 @@ const SinglePost = () => {
                 {/* {username === user?.username &&  */}
                 {username === user?.username && 
                 (<div className=' flex justify-end items-center w-fit gap-2 float-right'>
-                <BiEdit className=' text-green-500 text-2xl' onClick={()=>setUpdateMode(true)}/>
-                <AiOutlineDelete className=' text-red-500 text-2xl'onClick={handleDelete}/>
+                <BiEdit className=' text-green-500 cursor-pointer text-2xl' onClick={()=>setUpdateMode(true)}/>
+                <AiOutlineDelete className=' text-red-500 text-2xl cursor-pointer'onClick={handleDelete}/>
 
                </div>)}
                 </div>

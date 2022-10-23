@@ -6,7 +6,7 @@ import Sidebar from '../Components/Sidebar';
 import axios from 'axios';
 import { useLocation, useParams } from 'react-router-dom';
 import { Context } from './../context/Context';
-import loading from '../assets/loading.gif';
+import loadinggif from '../assets/loading-load.gif';
 
 const Home = () => {
     const [posts,setPosts] = useState([]);
@@ -24,18 +24,21 @@ const Home = () => {
     //     fetchPosts();
     // },[search]);
 
-
+    
     useEffect(()=>{
         fetch("https://glacial-everglades-76553.herokuapp.com/api/posts"+search)
-        .then(res=>res.json())
+        .then(res=> res.json())
         .then(data=>{
-            setPosts(data)
-            setLoading(false)
+            setPosts(data);
+            setLoading(false);
         })
+
     },[search]);
+
+
     if(loading)
     {
-        return <div className='flex justify-center items-center max-h-screen'><img src={loading} alt="" /></div>
+        return <div className='flex justify-center items-center h-screen'><img src={loadinggif} alt="" /></div>
     }
     return (
         <div>
